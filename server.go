@@ -17,7 +17,7 @@ func main() {
 	http.HandleFunc("/v1/task/status/", statusTaskHandler)
 	http.HandleFunc("/v1/task/complete/", completeTaskHandler)
 
-	http.HandleFunc("/v1/agent/list", completeTaskHandler)
+	http.HandleFunc("/v1/agent/list", listAgentHandler)
 
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

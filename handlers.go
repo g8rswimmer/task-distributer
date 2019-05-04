@@ -137,6 +137,7 @@ func createTaskHandler(writer http.ResponseWriter, request *http.Request) {
 			formatError(writer, fmt.Sprintf("Unable to encode response %s", err.Error()), http.StatusInternalServerError)
 			return
 		}
+		writer.Header().Set("Content-Type", "application/json")
 		writer.Write(resp)
 	default:
 		http.Error(writer, fmt.Sprintf("Method is not supported %s", request.Method), http.StatusMethodNotAllowed)
@@ -307,7 +308,25 @@ func statusTaskHandler(writer http.ResponseWriter, request *http.Request) {
 			formatError(writer, "Task Id must be included in the URL", http.StatusBadRequest)
 			return
 		}
-		writer.Write([]byte("Success"))
+		if t, has := tasks[taskID]; has {
+			success := struct {
+				Success bool `json:"success"`
+				Task    task `json:"task"`
+			}{
+				Success: true,
+				Task:    t,
+			}
+			resp, err := json.Marshal(success)
+			if err != nil {
+				formatError(writer, fmt.Sprintf("Unable to encode response %s", err.Error()), http.StatusInternalServerError)
+				return
+			}
+			writer.Header().Set("Content-Type", "application/json")
+			writer.Write(resp)
+		} else {
+			formatError(writer, fmt.Sprintf("Task %s is not present", taskID), http.StatusBadRequest)
+			return
+		}
 	default:
 		http.Error(writer, fmt.Sprintf("Method is not supported %s", request.Method), http.StatusMethodNotAllowed)
 	}
@@ -322,16 +341,78 @@ func completeTaskHandler(writer http.ResponseWriter, request *http.Request) {
 			formatError(writer, "Task Id must be included in the URL", http.StatusBadRequest)
 			return
 		}
-		writer.Write([]byte("Success"))
+		if t, has := tasks[taskID]; has {
+			t.Status = "Complete"
+			tasks[taskID] = t
+			success := struct {
+				Success bool `json:"success"`
+				Task    task `json:"task"`
+			}{
+				Success: true,
+				Task:    t,
+			}
+			resp, err := json.Marshal(success)
+			if err != nil {
+				formatError(writer, fmt.Sprintf("Unable to encode response %s", err.Error()), http.StatusInternalServerError)
+				return
+			}
+			writer.Header().Set("Content-Type", "application/json")
+			writer.Write(resp)
+		} else {
+			formatError(writer, fmt.Sprintf("Task %s is not present", taskID), http.StatusBadRequest)
+			return
+		}
 	default:
 		http.Error(writer, fmt.Sprintf("Method is not supported %s", request.Method), http.StatusMethodNotAllowed)
 	}
 }
 
+func currentTasks(a agent) ([]task, bool) {
+	var ts []task
+	for _, t := range tasks {
+		if t.Agent == a.ID && t.Status != "Complete" {
+			ts = append(ts, t)
+		}
+	}
+	if len(ts) == 0 {
+		return nil, false
+	}
+	return ts, true
+}
+
+type listAgentTasks struct {
+	agent
+	Tasks []task `json:"tasks"`
+}
+
 func listAgentHandler(writer http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case http.MethodGet:
-		writer.Write([]byte("Success"))
+		var ats []listAgentTasks
+		for _, a := range agents {
+			if ts, has := currentTasks(a); has {
+				at := listAgentTasks{
+					agent: a,
+					Tasks: ts,
+				}
+				ats = append(ats, at)
+			}
+		}
+		success := struct {
+			Success    bool             `json:"success"`
+			AgentTasks []listAgentTasks `json:"agent_tasks"`
+		}{
+			Success:    true,
+			AgentTasks: ats,
+		}
+		resp, err := json.Marshal(success)
+		if err != nil {
+			formatError(writer, fmt.Sprintf("Unable to encode response %s", err.Error()), http.StatusInternalServerError)
+			return
+		}
+		writer.Header().Set("Content-Type", "application/json")
+		writer.Write(resp)
+
 	default:
 		http.Error(writer, fmt.Sprintf("Method is not supported %s", request.Method), http.StatusMethodNotAllowed)
 	}
