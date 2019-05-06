@@ -35,7 +35,9 @@ There are some limitations that should be noted:
   - Testing was done via `curl` and `postman`, however testing was limited due to mocking of the database (`go-sqlmock` was being considered but was unable to get it to work properly)
 * Additional APIs
   - It might be nice to have a `task` API which would return all of the tasks from a `status` and `start date` range.
-     
+* Code structure
+  - I was attempting to structure the code for a good coding user experience.  However, I think that there are some short comings to this.
+       
 ## APIs
 
 The following are the `APIs` that are currently supported.
