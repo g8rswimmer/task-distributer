@@ -37,7 +37,47 @@ There are some limitations that should be noted:
   - It might be nice to have a `task` API which would return all of the tasks from a `status` and `start date` range.
 * Code structure
   - I was attempting to structure the code for a good coding user experience.  However, I think that there are some short comings to this.
-       
+
+## Database Schema
+
+### Skills
+The `skills` table contains all of the skills which an agent can possess.
+| Field         | Type             | Required | Description                                                         |
+|---------------|------------------|----------|---------------------------------------------------------------------|
+| skill         | VARCHAR(100)     | yes      | The primary key and the skill.                                      |
+| description   | TEXT             | yes      | A description of the skill.                                         |
+### Agents
+The `agents` table contains all of the agents that can be assigned a task.
+| Field         | Type          | Required | Description                                                         |
+|---------------|---------------|----------|---------------------------------------------------------------------|
+| id            | VARCHAR(10)   | yes      | The primary key, like an agent number.                              |
+| firstname     | VARCHAR(100)  | yes      | The first name of the agent, like John.                             |
+| lastname      | VARCAHR(100)  | yes      | The last name of the agent, like Doe.                               |
+### Agent Skills
+The `agentskills` table is a juntion object which links a skill(s) to an agent.
+| Field         | Type          | Required | Description                                                         |
+|---------------|---------------|----------|---------------------------------------------------------------------|
+| id            | VARCHAR(10)   | yes      | The primary key for the table.                                      |
+| skill         | VARCHAR(100)  | yes      | The reference to the skill.skill field.                             |
+| agent         | VARCAHR(10)   | yes      | The reference to the agent.id field.                                |
+### Priorities
+The `priorities` table defines the priority name and the associated level.
+| Field          | Type          | Required | Description                                                                                                               |
+|----------------|---------------|----------|---------------------------------------------------------------------------------------------------------------------------|
+| priority       | VARCHAR(100)  | yes      | The primary key for the table and the name of the priority like low.                                                      |
+| priority_level | INT           | yes      | The level as a number.  If the priority is high, the number will be higher.  For example, level 2 is higher than level 1. |
+### Tasks
+The `tasks` table defines the task that was assigned.
+| Field        | Type         | Required | Description                                                   |
+|--------------|--------------|----------|---------------------------------------------------------------|
+| id           | VARCHAR(100) | yes      | The primary key for the table.                                |
+| createdate   | TIMESTAMP    | yes      | The date and time when the task was assigned.                 |
+| name         | TEXT         | yes      | The name of the task, like 'My Cool Task'                     |
+| skills       | TEXT[]       |          | The skills that are associated with the task.                 |
+| priority     | VARCHAR(100) | yes      | The priority of the task which reference priorities.priority  |
+| status       | VARCHAR(100) | yes      | The status of the task, like 'Assigned'                       |
+| completedate | TIMESTAMP    |          | The date and time of when the task was completed by the agent |
+| agent        | VARCHAR(10)  | yes      | The reference, agent.id, to the agent assigned the task       |
 ## APIs
 
 The following are the `APIs` that are currently supported.
