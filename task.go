@@ -210,6 +210,10 @@ func (t *task) retrieve(id string) error {
 		break
 	}
 
+	if tsk.ID == "" {
+		return fmt.Errorf("unable to find task %s", id)
+	}
+
 	t.ID = tsk.ID
 	t.Agent = tsk.Agent
 	t.Priorty = tsk.Priorty

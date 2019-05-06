@@ -116,19 +116,76 @@ None.
 ```
 ### Task Status
 
+This `API` will return the current status of a task.
+
 #### URI
 
-#### Format
+`/v1/task/<task id>`
+
+#### Content Type
+
+JSON
 
 #### HTTP Method
 
+GET
+
 #### Parameters
+
+None.
 
 #### Reuest Body
 
-#### Response Body
+None.
 
-#### Example 
+#### Response Body
+| Field   | Type   | Description                                                  |
+|---------|--------|--------------------------------------------------------------|
+| success | bool   | If the application was successfully distributed to an agent. |
+| task    | object | Description of the task with the assigned agent. Only present if success is true |
+| error_message    | string | A description of the error that occured.  Only present if sucess is false |
+
+##### Task
+| Field         | Type             | Description                                                                    |
+|---------------|------------------|--------------------------------------------------------------------------------|
+| id            | string           | UUID of the task.  Can be used to access the status and setting of parameters. |
+| name          | string           | The name of the task                                                           |
+| skills        | array of strings | An array of skills required by the task.                                       |
+| priority      | string           | The priority of the task.                                                      |
+| start_time    | Date and time    | The date and time of when the task has been distributed to an agent            |
+| status        | string           | The status of the task, currently set to assigned.                             |
+| complete_time | Date and time    | The date and time of when the task was completed by the agent                  |
+| agent         | string           | The UUID of the agent assigned to the task                                     |
+
+#### Examples
+ ```
+ curl https://ancient-mountain-96195.herokuapp.com/v1/task/bj7rmmrk7c874r7vb8ng
+ ```
+##### Success
+```
+{
+    "success": true,
+    "task": {
+        "id": "bj7rmmrk7c874r7vb8ng",
+        "name": "Test Name",
+        "skills": [
+            "skill1"
+        ],
+        "priority": "high",
+        "status": "Assigned",
+        "start_time": "2019-05-06T04:43:07.143378962Z",
+        "complete_time": "0001-01-01T00:00:00Z",
+        "assigned_agent": "1000"
+    }
+}
+```
+##### Errors
+```
+{
+    "success":false,
+    "error_message":"unable to find an agent to assign the task"
+}
+```
 
 ### Task Complete
 
