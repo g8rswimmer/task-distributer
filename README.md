@@ -42,12 +42,14 @@ There are some limitations that should be noted:
 
 ### Skills
 The `skills` table contains all of the skills which an agent can possess.
+
 | Field         | Type             | Required | Description                                                         |
 |---------------|------------------|----------|---------------------------------------------------------------------|
 | skill         | VARCHAR(100)     | yes      | The primary key and the skill.                                      |
 | description   | TEXT             | yes      | A description of the skill.                                         |
 ### Agents
 The `agents` table contains all of the agents that can be assigned a task.
+
 | Field         | Type          | Required | Description                                                         |
 |---------------|---------------|----------|---------------------------------------------------------------------|
 | id            | VARCHAR(10)   | yes      | The primary key, like an agent number.                              |
@@ -55,6 +57,7 @@ The `agents` table contains all of the agents that can be assigned a task.
 | lastname      | VARCAHR(100)  | yes      | The last name of the agent, like Doe.                               |
 ### Agent Skills
 The `agentskills` table is a juntion object which links a skill(s) to an agent.
+
 | Field         | Type          | Required | Description                                                         |
 |---------------|---------------|----------|---------------------------------------------------------------------|
 | id            | VARCHAR(10)   | yes      | The primary key for the table.                                      |
@@ -62,12 +65,14 @@ The `agentskills` table is a juntion object which links a skill(s) to an agent.
 | agent         | VARCAHR(10)   | yes      | The reference to the agent.id field.                                |
 ### Priorities
 The `priorities` table defines the priority name and the associated level.
+
 | Field          | Type          | Required | Description                                                                                                               |
 |----------------|---------------|----------|---------------------------------------------------------------------------------------------------------------------------|
 | priority       | VARCHAR(100)  | yes      | The primary key for the table and the name of the priority like low.                                                      |
 | priority_level | INT           | yes      | The level as a number.  If the priority is high, the number will be higher.  For example, level 2 is higher than level 1. |
 ### Tasks
 The `tasks` table defines the task that was assigned.
+
 | Field        | Type         | Required | Description                                                   |
 |--------------|--------------|----------|---------------------------------------------------------------|
 | id           | VARCHAR(100) | yes      | The primary key for the table.                                |
