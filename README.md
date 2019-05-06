@@ -2,13 +2,30 @@
 
 ## How to start
 
-This application is hosted by [Heroku](https://www.heroku.com) and uses a [Postgres](https://www.postgresql.org/) database.  It is recommended to have the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed which would allow you to run locally or on your own dyno.  However, this application is running on a dyno, https://ancient-mountain-96195.herokuapp.com/.
+This application is hosted by [Heroku](https://www.heroku.com) and uses a [Postgres](https://www.postgresql.org/) database.  
+
+### Tools
+1. It is recommended to have the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed which would allow you to run locally or on your own dyno.  However, this application is running on a dyno, https://ancient-mountain-96195.herokuapp.com/.
+2. The tool that was used to view the `Postgres` data base is [pgAdmin](https://www.pgadmin.org/download/)
+3. For testing [curl](https://curl.haxx.se/) and or [Postman](https://www.getpostman.com/) was used.
+
+### Initializing
+1. Clone the [repo](https://github.com/g8rswimmer/task-distributer.git)
+2. Log into `Heroku`
+3. Go to the `task-distributer` directory
+4. Run `heroku create`
+  - There should be a new git remote `heroku`
+5. Run `heroku addons:create heroku-postgresql:hobby-dev`
+6. If you wish to run locally, you would need to use the database url
+  - Run `heroku config:get DATABASE_URL -s >> .env.test`
+  
+### Running On Heroku
+1. Run `git push heroku master`
 
 ### Running Locally
-After installing the Heroku CLI, you can run the application locally.
-```
-heroku local -e .env.test
-```
+1. Go to the `task-distributer` directory
+2. Run `go install`
+3. Run `heroku local -e .env.test`
 This will run the application using the `Postgres` database on port `5000`.  Please note, the before testing you may need to make sure that all of the tasks are completed.
 
 ## Limitations
