@@ -1,6 +1,37 @@
 {
 	"comment": "",
 	"ignore": "test",
-	"package": [],
+	"package": [
+		{
+			"checksumSHA1": "rPdy30CI1dYf8RQLS1ddmLrwOGA=",
+			"path": "github.com/DATA-DOG/go-sqlmock",
+			"revision": "ef0bdf231ae386d1f8d72c30c87ae592b5c8c417",
+			"revisionTime": "2019-03-22T14:25:48Z"
+		},
+		{
+			"checksumSHA1": "UENkEu0LkGF0HZ5c3dMUdN4N9BA=",
+			"path": "github.com/lib/pq",
+			"revision": "ceb88a0649027d76542fd8084fcb4e07b4d52295",
+			"revisionTime": "2019-05-04T01:17:54Z"
+		},
+		{
+			"checksumSHA1": "AU3fA8Sm33Vj9PBoRPSeYfxLRuE=",
+			"path": "github.com/lib/pq/oid",
+			"revision": "ceb88a0649027d76542fd8084fcb4e07b4d52295",
+			"revisionTime": "2019-05-04T01:17:54Z"
+		},
+		{
+			"checksumSHA1": "ywel3wHXnu1eLhyT1/FolporeAc=",
+			"path": "github.com/lib/pq/scram",
+			"revision": "ceb88a0649027d76542fd8084fcb4e07b4d52295",
+			"revisionTime": "2019-05-04T01:17:54Z"
+		},
+		{
+			"checksumSHA1": "P1e3AR3oC4OKWfzbJ6kLCX/FRpo=",
+			"path": "github.com/rs/xid",
+			"revision": "ba6f703301d6c14cbc05faa3b512058f2304e16c",
+			"revisionTime": "2019-04-29T19:26:42Z"
+		}
+	],
 	"rootPath": "task-distributer"
 }
