@@ -200,7 +200,7 @@ func (t *task) retrieve(id string) error {
 	var tsk task
 	for rows.Next() {
 		var date pq.NullTime
-		if err := rows.Scan(&tsk.ID, &tsk.Agent, &tsk.Priorty, pq.Array(&t.Skills), &tsk.StartTime, &tsk.Status, &date); err != nil {
+		if err := rows.Scan(&tsk.ID, &tsk.Agent, &tsk.Priorty, pq.Array(&tsk.Skills), &tsk.StartTime, &tsk.Status, &date); err != nil {
 			fmt.Println(err.Error())
 			return fmt.Errorf("unable to find task %s", id)
 		}
