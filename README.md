@@ -10,7 +10,7 @@ This application is hosted by [Heroku](https://www.heroku.com) and uses a [Postg
 3. For testing [curl](https://curl.haxx.se/) and or [Postman](https://www.getpostman.com/) was used.
 
 ### Initializing
-1. Clone the [repo](https://github.com/g8rswimmer/task-distributer.git)
+1. Clone the repo
 2. Log into `Heroku`
 3. Go to the `task-distributer` directory
 4. Run `heroku create`
@@ -18,7 +18,7 @@ This application is hosted by [Heroku](https://www.heroku.com) and uses a [Postg
 5. Run `heroku addons:create heroku-postgresql:hobby-dev`
 6. If you wish to run locally, you would need to use the database url
   - Run `heroku config:get DATABASE_URL -s >> .env.test`
-  
+
 ### Running On Heroku
 1. Run `git push heroku master`
 
@@ -33,7 +33,9 @@ This will run the application using the `Postgres` database on port `5000`.  Ple
 There are some limitations that should be noted:
 * Unit Tests
   - Testing was done via `curl` and `postman`, however testing was limited due to mocking of the database (`go-sqlmock` was being considered but was unable to get it to work properly)
-   
+* Additional APIs
+  - It might be nice to have a `task` API which would return all of the tasks from a `status` and `start date` range.
+     
 ## APIs
 
 The following are the `APIs` that are currently supported.
