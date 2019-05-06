@@ -13,6 +13,7 @@ import (
 	"github.com/rs/xid"
 )
 
+// payload from the create task HTTP request
 type payload struct {
 	Name    string   `json:"name"`
 	Skills  []string `json:"skills"`
@@ -92,6 +93,7 @@ func (p *payload) createTask(db *sql.DB, agentID string) (task, error) {
 	return t, nil
 }
 
+// task that is distributed to an agent
 type task struct {
 	ID            string   `json:"id"`
 	Name          string   `json:"name"`
