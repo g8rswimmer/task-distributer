@@ -112,7 +112,10 @@ func (t *task) assignTask(p payload) error {
 	if err != nil {
 		return err
 	}
-	ats, err := agentTasks(t.db, skilledAgents)
+	agents := agents{
+		db: t.db,
+	}
+	ats, err := agents.tasks(skilledAgents)
 	if err != nil {
 		return err
 	}

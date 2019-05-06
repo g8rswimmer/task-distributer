@@ -7,16 +7,7 @@ import (
 	"strings"
 )
 
-type agent struct {
-	ID        string `json:"id"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-}
-type agentSkill struct {
-	Agent string
-	Skill string
-}
-
+// createTaskHandler will attempt to create and distribute a task to an agent.
 func createTaskHandler(writer http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case http.MethodPost:
@@ -66,6 +57,8 @@ func createTaskHandler(writer http.ResponseWriter, request *http.Request) {
 		http.Error(writer, fmt.Sprintf("Method is not supported %s", request.Method), http.StatusMethodNotAllowed)
 	}
 }
+
+// statusTaskHandler will return the current status of the task.
 func statusTaskHandler(writer http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case http.MethodGet:
@@ -102,6 +95,7 @@ func statusTaskHandler(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
+// completeTaskHandler sets the task as completed.
 func completeTaskHandler(writer http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case http.MethodGet:
@@ -134,11 +128,7 @@ func completeTaskHandler(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-type listAgentTasks struct {
-	agent
-	Tasks []task `json:"tasks"`
-}
-
+// listAgentHandler will list the agents and what they are currently working on
 func listAgentHandler(writer http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case http.MethodGet:
@@ -148,8 +138,8 @@ func listAgentHandler(writer http.ResponseWriter, request *http.Request) {
 		}
 
 		success := struct {
-			Success    bool             `json:"success"`
-			AgentTasks []listAgentTasks `json:"agent_tasks"`
+			Success    bool         `json:"success"`
+			AgentTasks []agentTasks `json:"agent_tasks"`
 		}{
 			Success:    true,
 			AgentTasks: ats,
