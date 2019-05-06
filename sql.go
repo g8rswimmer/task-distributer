@@ -116,7 +116,7 @@ func recentAgent(db *sql.DB, aTasks map[string][]task, priorityLevel int) (strin
 func updateTaskStatus(db *sql.DB, id, status string) error {
 	stmt := `
 	UPDATE Tasks
-	SET Status = '%s', CompleteData = now()
+	SET Status = '%s', CompleteDate = now()
 	WHERE 
 		Id = '%s'
 	`
