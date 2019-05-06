@@ -71,7 +71,10 @@ None.
 | complete_time | Date and time    | The date and time of when the task was completed by the agent                  |
 | agent         | string           | The UUID of the agent assigned to the task                                     |
 
-#### Example 
+#### Examples
+ ```
+ curl -d '{"name": "Task Test","skills": ["skill1"],"priority": "low"}' -H "Content-Type: application/json" -X POST https://ancient-mountain-96195.herokuapp.com/v1/task/create
+ ```
 ##### Success
 ```
 {
