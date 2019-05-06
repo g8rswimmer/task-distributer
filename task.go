@@ -184,7 +184,7 @@ func (t *task) insert(ctp payload, agentID string) error {
 func (t *task) retrieve(id string) error {
 	stmt := `
 	SELECT
-	Id, Agent, Priority, Createdate, Status, CompleteDate
+	Id, Agent, Priority, Skills, Createdate, Status, CompleteDate
 	FROM Tasks
 	WHERE 
 		Id = '%s'
@@ -200,7 +200,7 @@ func (t *task) retrieve(id string) error {
 	var tsk task
 	for rows.Next() {
 		var date pq.NullTime
-		if err := rows.Scan(&tsk.ID, &tsk.Agent, &tsk.Priorty, &tsk.StartTime, &tsk.Status, &date); err != nil {
+		if err := rows.Scan(&tsk.ID, &tsk.Agent, &tsk.Priorty, pq.Array(&t.Skills), &tsk.StartTime, &tsk.Status, &date); err != nil {
 			fmt.Println(err.Error())
 			return fmt.Errorf("unable to find task %s", id)
 		}
@@ -219,6 +219,7 @@ func (t *task) retrieve(id string) error {
 	t.Priorty = tsk.Priorty
 	t.StartTime = tsk.StartTime
 	t.Status = tsk.Status
+	t.Skills = tsk.Skills
 	t.CompleteTime = tsk.CompleteTime
 
 	return nil
